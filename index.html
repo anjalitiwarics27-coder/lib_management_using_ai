@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,95 +8,108 @@
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink-900:#161c24;
-    --ink-800:#1f2733;
-    --ink-700:#2a3542;
-    --ink-600:#3a4756;
-    --paper:#ede7d8;
-    --paper-dim:#b9b3a2;
-    --brass:#c29a3b;
-    --brass-bright:#dab653;
-    --maroon:#a6514f;
-    --sage:#7d9b76;
-    --serif:'Newsreader', Georgia, serif;
-    --sans:'IBM Plex Sans', Arial, sans-serif;
+    --ink-900:#161c24; --ink-800:#1f2733; --ink-700:#2a3542; --ink-600:#3a4756;
+    --paper:#ede7d8; --paper-dim:#b9b3a2;
+    --brass:#c29a3b; --brass-bright:#dab653;
+    --maroon:#a6514f; --sage:#7d9b76;
+    --serif:'Newsreader', Georgia, serif; --sans:'IBM Plex Sans', Arial, sans-serif;
   }
   *{box-sizing:border-box;}
   body{margin:0;font-family:var(--sans);background:var(--ink-900);color:var(--paper);}
+  svg{display:block;}
  
   .app{display:flex;min-height:100vh;}
  
   /* ---------- Sidebar ---------- */
-  .sidebar{
-    width:230px;flex-shrink:0;background:var(--ink-800);
-    border-right:1px solid var(--ink-600);
-    padding:28px 20px;display:flex;flex-direction:column;gap:32px;
-  }
+  .sidebar{width:230px;flex-shrink:0;background:var(--ink-800);border-right:1px solid var(--ink-600);padding:28px 20px;display:flex;flex-direction:column;gap:28px;}
   .brand{display:flex;flex-direction:column;gap:2px;}
   .brand .mark{font-family:var(--serif);font-size:15px;color:var(--brass);letter-spacing:.14em;}
   .brand h1{font-family:var(--serif);font-weight:500;font-size:26px;margin:2px 0 0;line-height:1.15;}
   .brand p{margin:6px 0 0;font-size:12.5px;color:var(--paper-dim);}
  
   nav{display:flex;flex-direction:column;gap:2px;}
-  nav button{
-    all:unset;cursor:pointer;padding:10px 12px;border-radius:6px;
-    font-size:14px;color:var(--paper-dim);display:flex;align-items:center;gap:10px;
-    border-left:2px solid transparent;
-  }
+  nav button{all:unset;cursor:pointer;padding:10px 12px;border-radius:6px;font-size:14px;color:var(--paper-dim);display:flex;align-items:center;gap:10px;border-left:2px solid transparent;}
+  nav button svg{flex-shrink:0;width:16px;height:16px;stroke:currentColor;}
   nav button:hover{background:var(--ink-700);color:var(--paper);}
   nav button.active{background:var(--ink-700);color:var(--paper);border-left:2px solid var(--brass);}
+  nav button.active svg{stroke:var(--brass-bright);}
   nav .count{margin-left:auto;font-size:12px;color:var(--paper-dim);font-variant-numeric:tabular-nums;}
+ 
+  .sidebar-tools{display:flex;flex-direction:column;gap:6px;padding-top:16px;border-top:1px solid var(--ink-600);}
+  .sidebar-tools .tool-label{font-size:11px;text-transform:none;color:var(--paper-dim);margin-bottom:4px;}
+  .tool-btn{all:unset;cursor:pointer;display:flex;align-items:center;gap:9px;font-size:13px;color:var(--paper-dim);padding:8px 10px;border-radius:6px;border:1px solid var(--ink-600);}
+  .tool-btn:hover{color:var(--paper);border-color:var(--paper-dim);}
+  .tool-btn svg{width:14px;height:14px;stroke:currentColor;flex-shrink:0;}
  
   .sidebar-footer{margin-top:auto;font-size:11.5px;color:var(--paper-dim);line-height:1.5;border-top:1px solid var(--ink-600);padding-top:16px;}
  
   /* ---------- Main ---------- */
-  main{flex:1;padding:40px 48px;max-width:980px;}
+  main{flex:1;padding:40px 48px;max-width:1040px;}
   .view{display:none;}
   .view.active{display:block;animation:rise .35s ease;}
   @keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
  
   h2.page-title{font-family:var(--serif);font-weight:500;font-size:30px;margin:0 0 6px;}
-  .page-sub{color:var(--paper-dim);font-size:14px;margin:0 0 28px;max-width:60ch;}
+  .page-sub{color:var(--paper-dim);font-size:14px;margin:0 0 28px;max-width:62ch;}
  
-  /* Dashboard stat cards */
+  .hero{display:flex;align-items:flex-end;gap:36px;margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--ink-600);}
+  .hero-text{flex:1;min-width:220px;}
+  .shelf{display:flex;align-items:flex-end;gap:5px;height:96px;flex-shrink:0;}
+  .shelf .spine{width:14px;border-radius:2px 2px 0 0;}
+  .shelf-base{height:6px;width:100%;background:var(--ink-600);border-radius:2px;margin-top:-2px;}
+  .shelf-wrap{display:flex;flex-direction:column;}
+ 
   .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:36px;}
-  .stat{background:var(--ink-800);border:1px solid var(--ink-600);border-radius:8px;padding:18px 18px 16px;}
-  .stat .num{font-family:var(--serif);font-size:32px;color:var(--brass-bright);}
-  .stat .label{font-size:12.5px;color:var(--paper-dim);margin-top:4px;}
+  .stat{background:var(--ink-800);border:1px solid var(--ink-600);border-radius:8px;padding:16px 18px;display:flex;flex-direction:column;gap:10px;}
+  .stat .icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;background:var(--ink-700);}
+  .stat .icon svg{width:15px;height:15px;stroke:var(--brass-bright);}
+  .stat .num{font-family:var(--serif);font-size:30px;color:var(--brass-bright);line-height:1;}
+  .stat .label{font-size:12.5px;color:var(--paper-dim);}
  
   .panel{background:var(--ink-800);border:1px solid var(--ink-600);border-radius:8px;padding:22px 24px;margin-bottom:24px;}
   .panel h3{font-family:var(--serif);font-weight:500;font-size:18px;margin:0 0 4px;}
   .panel .hint{font-size:12.5px;color:var(--paper-dim);margin:0 0 18px;}
+  .panel .capacity{font-size:12px;color:var(--paper-dim);font-variant-numeric:tabular-nums;}
+  .capacity.warn{color:var(--maroon);}
  
-  .row-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+  .row-header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px;flex-wrap:wrap;}
  
-  button.primary{
-    all:unset;cursor:pointer;background:var(--brass);color:var(--ink-900);
-    font-weight:600;font-size:13.5px;padding:9px 16px;border-radius:6px;
-  }
+  .search-box{position:relative;flex:1;min-width:180px;max-width:280px;}
+  .search-box svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--paper-dim);}
+  .search-box input{width:100%;padding-left:32px;}
+ 
+  .chip-row{display:flex;gap:6px;}
+  .chip{all:unset;cursor:pointer;font-size:12.5px;padding:6px 12px;border-radius:20px;border:1px solid var(--ink-600);color:var(--paper-dim);}
+  .chip:hover{color:var(--paper);}
+  .chip.active{background:var(--brass);border-color:var(--brass);color:var(--ink-900);font-weight:600;}
+ 
+  button.primary{all:unset;cursor:pointer;background:var(--brass);color:var(--ink-900);font-weight:600;font-size:13.5px;padding:9px 16px;border-radius:6px;display:inline-flex;align-items:center;gap:7px;}
+  button.primary svg{width:14px;height:14px;stroke:var(--ink-900);}
   button.primary:hover{background:var(--brass-bright);}
-  button.ghost{
-    all:unset;cursor:pointer;color:var(--paper-dim);font-size:13px;
-    padding:8px 12px;border:1px solid var(--ink-600);border-radius:6px;
-  }
+  button.primary.danger{background:var(--maroon);color:var(--paper);}
+  button.primary.danger svg{stroke:var(--paper);}
+  button.primary.danger:hover{background:#bb625f;}
+  button.ghost{all:unset;cursor:pointer;color:var(--paper-dim);font-size:13px;padding:9px 16px;border:1px solid var(--ink-600);border-radius:6px;}
   button.ghost:hover{color:var(--paper);border-color:var(--paper-dim);}
   button.danger-link{all:unset;cursor:pointer;color:var(--maroon);font-size:12.5px;}
   button.danger-link:hover{text-decoration:underline;}
-  button.action-link{all:unset;cursor:pointer;color:var(--sage);font-size:12.5px;}
-  button.action-link:hover{text-decoration:underline;}
  
-  form.inline-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:6px;}
+  form.inline-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:14px;}
   form.inline-form label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--paper-dim);}
-  input, select{
-    background:var(--ink-900);border:1px solid var(--ink-600);color:var(--paper);
-    border-radius:5px;padding:9px 10px;font-size:13.5px;font-family:var(--sans);
-  }
+  input, select{background:var(--ink-900);border:1px solid var(--ink-600);color:var(--paper);border-radius:5px;padding:9px 10px;font-size:13.5px;font-family:var(--sans);}
   input:focus, select:focus, button:focus-visible{outline:2px solid var(--brass);outline-offset:1px;}
+  .field-error{border-color:var(--maroon) !important;}
  
   table{width:100%;border-collapse:collapse;margin-top:8px;}
   th{text-align:left;font-size:11.5px;letter-spacing:.03em;color:var(--paper-dim);font-weight:500;padding:8px 10px;border-bottom:1px solid var(--ink-600);}
+  th.sortable{cursor:pointer;user-select:none;}
+  th.sortable:hover{color:var(--paper);}
+  th.sortable .arrow{opacity:0;margin-left:4px;font-size:10px;}
+  th.sortable.sorted .arrow{opacity:1;color:var(--brass-bright);}
   td{padding:11px 10px;font-size:13.5px;border-bottom:1px solid var(--ink-700);}
   tr:last-child td{border-bottom:none;}
+  tr.flash{animation:flash 1.1s ease;}
+  @keyframes flash{from{background:rgba(194,154,59,.22);}to{background:transparent;}}
   .empty-row td{color:var(--paper-dim);font-style:italic;text-align:center;padding:22px;}
  
   .badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11.5px;font-weight:500;}
@@ -107,32 +119,50 @@
   .two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;}
   @media (max-width:820px){.two-col{grid-template-columns:1fr;}}
  
-  .rec-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
-  .rec-list li{background:var(--ink-900);border:1px solid var(--ink-600);border-radius:6px;padding:10px 12px;font-size:13.5px;display:flex;justify-content:space-between;}
-  .rec-list li .tag{color:var(--paper-dim);font-size:11.5px;}
+  .quick-find{display:flex;gap:8px;margin-bottom:20px;}
+  .quick-find input{flex:1;}
+  #quick-find-result{margin-top:12px;font-size:13.5px;}
+  #quick-find-result .found{background:var(--ink-900);border:1px solid var(--ink-600);border-radius:6px;padding:10px 12px;display:flex;justify-content:space-between;gap:12px;}
  
-  #toast{
-    position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
-    background:var(--ink-700);border:1px solid var(--ink-600);color:var(--paper);
-    padding:11px 18px;border-radius:7px;font-size:13.5px;opacity:0;pointer-events:none;
-    transition:opacity .25s ease, transform .25s ease;
-  }
+  .rec-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
+  .rec-list li{background:var(--ink-900);border:1px solid var(--ink-600);border-radius:6px;padding:10px 12px;font-size:13.5px;display:flex;align-items:center;gap:10px;}
+  .rec-list li svg{width:14px;height:14px;stroke:var(--brass-bright);flex-shrink:0;}
+  .rec-list li .tag{margin-left:auto;color:var(--paper-dim);font-size:11.5px;}
+ 
+  .activity-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;}
+  .activity-list li{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--ink-700);font-size:13px;}
+  .activity-list li:last-child{border-bottom:none;}
+  .activity-list .dot{width:7px;height:7px;border-radius:50%;background:var(--brass);margin-top:5px;flex-shrink:0;}
+  .activity-list .when{margin-left:auto;color:var(--paper-dim);font-size:11.5px;white-space:nowrap;}
+ 
+  #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink-700);border:1px solid var(--ink-600);color:var(--paper);padding:11px 18px;border-radius:7px;font-size:13.5px;opacity:0;pointer-events:none;transition:opacity .25s ease, transform .25s ease;display:flex;align-items:center;gap:9px;z-index:50;}
+  #toast svg{width:14px;height:14px;stroke:var(--sage);flex-shrink:0;}
+  #toast.error svg{stroke:var(--maroon);}
   #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
   #toast.error{border-color:var(--maroon);}
  
-  @media (prefers-reduced-motion: reduce){
-    .view.active{animation:none;}
-    #toast{transition:none;}
-  }
+  /* Modal */
+  .modal-overlay{position:fixed;inset:0;background:rgba(10,13,17,.6);display:none;align-items:center;justify-content:center;z-index:60;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:var(--ink-800);border:1px solid var(--ink-600);border-radius:10px;padding:24px;max-width:380px;width:90%;}
+  .modal h3{font-family:var(--serif);font-size:19px;margin:0 0 8px;}
+  .modal p{font-size:13.5px;color:var(--paper-dim);margin:0 0 20px;}
+  .modal-actions{display:flex;justify-content:flex-end;gap:10px;}
+ 
+  input[type="file"]{display:none;}
+ 
+  @media (prefers-reduced-motion: reduce){.view.active{animation:none;} tr.flash{animation:none;} #toast{transition:none;}}
  
   @media (max-width:720px){
     .app{flex-direction:column;}
-    .sidebar{width:100%;flex-direction:row;align-items:center;padding:16px 20px;overflow-x:auto;}
+    .sidebar{width:100%;flex-direction:row;align-items:center;padding:16px 20px;overflow-x:auto;flex-wrap:wrap;}
     .brand{display:none;}
     nav{flex-direction:row;}
+    .sidebar-tools{flex-direction:row;border-top:none;padding-top:0;}
     .sidebar-footer{display:none;}
     main{padding:28px 20px;}
     .stats{grid-template-columns:repeat(2,1fr);}
+    .hero{flex-direction:column-reverse;align-items:flex-start;}
   }
 </style>
 </head>
@@ -146,13 +176,37 @@
       <p>Book &amp; borrower records</p>
     </div>
     <nav>
-      <button data-view="dashboard" class="active">Dashboard</button>
-      <button data-view="books">Books <span class="count" id="nav-book-count"></span></button>
-      <button data-view="students">Students <span class="count" id="nav-student-count"></span></button>
-      <button data-view="circulation">Issue / Return</button>
+      <button data-view="dashboard" class="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>
+        Dashboard
+      </button>
+      <button data-view="books">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 4h11a2 2 0 0 1 2 2v14H6a2 2 0 0 1-2-2V4z"/><path d="M8 4v16"/></svg>
+        Books <span class="count" id="nav-book-count"></span>
+      </button>
+      <button data-view="students">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1.2-4 4-6 7-6s5.8 2 7 6"/></svg>
+        Students <span class="count" id="nav-student-count"></span>
+      </button>
+      <button data-view="circulation">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 7h11l-3-3M20 17H9l3 3"/></svg>
+        Issue / Return
+      </button>
     </nav>
+    <div class="sidebar-tools">
+      <div class="tool-label">Ledger file</div>
+      <button class="tool-btn" id="export-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 21h16"/></svg>
+        Export ledger
+      </button>
+      <button class="tool-btn" id="import-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 21V9M7 14l5-5 5 5"/><path d="M4 3h16"/></svg>
+        Import ledger
+      </button>
+      <input type="file" id="import-file" accept="application/json">
+    </div>
     <div class="sidebar-footer">
-      Records are kept for this session only — refreshing the page resets the ledger.
+      Data lives in this tab only. Export the ledger to keep a copy, or import one to pick up where you left off.
     </div>
   </aside>
  
@@ -160,21 +214,37 @@
  
     <!-- DASHBOARD -->
     <section class="view active" id="view-dashboard">
-      <h2 class="page-title">Dashboard</h2>
-      <p class="page-sub">A running account of what's on the shelves and who has borrowed what.</p>
-      <div class="stats">
-        <div class="stat"><div class="num" id="stat-total">0</div><div class="label">Total books</div></div>
-        <div class="stat"><div class="num" id="stat-available">0</div><div class="label">Available now</div></div>
-        <div class="stat"><div class="num" id="stat-issued">0</div><div class="label">Currently issued</div></div>
-        <div class="stat"><div class="num" id="stat-students">0</div><div class="label">Registered students</div></div>
+      <div class="hero">
+        <div class="hero-text">
+          <h2 class="page-title">Dashboard</h2>
+          <p class="page-sub" style="margin-bottom:0;">A running account of what's on the shelves and who has borrowed what.</p>
+        </div>
+        <div class="shelf-wrap">
+          <div class="shelf" id="shelf-illustration"></div>
+          <div class="shelf-base"></div>
+        </div>
       </div>
-      <div class="panel">
-        <h3>Recently added</h3>
-        <p class="hint">The last few titles entered into the ledger.</p>
-        <table>
-          <thead><tr><th>Title</th><th>Subject</th><th>Status</th></tr></thead>
-          <tbody id="recent-books-body"></tbody>
-        </table>
+      <div class="stats">
+        <div class="stat"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 4h11a2 2 0 0 1 2 2v14H6a2 2 0 0 1-2-2V4z"/></svg></div><div class="num" id="stat-total">0</div><div class="label">Total books</div></div>
+        <div class="stat"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M5 13l4 4L19 7"/></svg></div><div class="num" id="stat-available">0</div><div class="label">Available now</div></div>
+        <div class="stat"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 3"/></svg></div><div class="num" id="stat-issued">0</div><div class="label">Currently issued</div></div>
+        <div class="stat"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1.2-4 4-6 7-6s5.8 2 7 6"/></svg></div><div class="num" id="stat-students">0</div><div class="label">Registered students</div></div>
+      </div>
+ 
+      <div class="two-col">
+        <div class="panel">
+          <h3>Recently added</h3>
+          <p class="hint">The last few titles entered into the ledger.</p>
+          <table>
+            <thead><tr><th>Title</th><th>Subject</th><th>Status</th></tr></thead>
+            <tbody id="recent-books-body"></tbody>
+          </table>
+        </div>
+        <div class="panel">
+          <h3>Recent activity</h3>
+          <p class="hint">Every action taken this session, most recent first.</p>
+          <ul class="activity-list" id="activity-list"></ul>
+        </div>
       </div>
     </section>
  
@@ -185,21 +255,44 @@
  
       <div class="panel">
         <h3>Add a book</h3>
-        <p class="hint">Every book needs a unique ID, a title and a subject.</p>
+        <p class="hint">Every book needs a unique ID, a title and a subject. Up to 100 books can be shelved.</p>
         <form class="inline-form" id="add-book-form">
           <label>Book ID <input type="number" id="book-id" required></label>
           <label>Title <input type="text" id="book-title" maxlength="50" required></label>
           <label>Subject <input type="text" id="book-subject" maxlength="30" required></label>
-          <label style="justify-content:flex-end;"><span>&nbsp;</span><button type="submit" class="primary">Add book</button></label>
         </form>
+        <button type="submit" form="add-book-form" class="primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+          Add book
+        </button>
       </div>
  
       <div class="panel">
         <div class="row-header">
           <h3 style="margin:0;">All books</h3>
+          <span class="capacity" id="book-capacity"></span>
+        </div>
+        <div class="row-header">
+          <div class="chip-row" id="book-filter-chips">
+            <button class="chip active" data-filter="all">All</button>
+            <button class="chip" data-filter="available">Available</button>
+            <button class="chip" data-filter="issued">Issued</button>
+          </div>
+          <div class="search-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="text" id="book-search" placeholder="Search title or subject…">
+          </div>
         </div>
         <table>
-          <thead><tr><th>ID</th><th>Title</th><th>Subject</th><th>Status</th><th></th></tr></thead>
+          <thead>
+            <tr>
+              <th class="sortable" data-sort="id">ID<span class="arrow">▲</span></th>
+              <th class="sortable" data-sort="title">Title<span class="arrow">▲</span></th>
+              <th class="sortable" data-sort="subject">Subject<span class="arrow">▲</span></th>
+              <th class="sortable" data-sort="available">Status<span class="arrow">▲</span></th>
+              <th></th>
+            </tr>
+          </thead>
           <tbody id="books-body"></tbody>
         </table>
       </div>
@@ -210,6 +303,16 @@
       <h2 class="page-title">Students</h2>
       <p class="page-sub">Everyone who has ever issued a book, and what they currently hold.</p>
       <div class="panel">
+        <div class="row-header">
+          <h3 style="margin:0;">All students</h3>
+          <span class="capacity" id="student-capacity"></span>
+        </div>
+        <div class="row-header">
+          <div class="search-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="text" id="student-search" placeholder="Search by name…">
+          </div>
+        </div>
         <table>
           <thead><tr><th>ID</th><th>Name</th><th>Currently borrowed</th><th>Last subject</th></tr></thead>
           <tbody id="students-body"></tbody>
@@ -220,7 +323,17 @@
     <!-- CIRCULATION -->
     <section class="view" id="view-circulation">
       <h2 class="page-title">Issue / Return</h2>
-      <p class="page-sub">Hand a book to a student, take one back, and see similar titles by subject.</p>
+      <p class="page-sub">Hand a book to a student, take one back, or look one up by ID.</p>
+ 
+      <div class="panel">
+        <h3>Quick find by Book ID</h3>
+        <p class="hint">Look up a single book's status without leaving this tab.</p>
+        <div class="quick-find">
+          <input type="number" id="quick-find-input" placeholder="Enter a Book ID…">
+          <button class="ghost" id="quick-find-btn">Find</button>
+        </div>
+        <div id="quick-find-result"></div>
+      </div>
  
       <div class="two-col">
         <div class="panel">
@@ -231,7 +344,10 @@
             <label>Student name <input type="text" id="issue-student-name" maxlength="50" required></label>
             <label>Book ID <input type="number" id="issue-book-id" required></label>
           </form>
-          <button type="submit" form="issue-form" class="primary">Issue book</button>
+          <button type="submit" form="issue-form" class="primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 7h11l-3-3M4 7l3 3"/></svg>
+            Issue book
+          </button>
         </div>
  
         <div class="panel">
@@ -241,7 +357,10 @@
             <label>Student ID <input type="number" id="return-student-id" required></label>
             <label>Book ID <input type="number" id="return-book-id" required></label>
           </form>
-          <button type="submit" form="return-form" class="primary">Return book</button>
+          <button type="submit" form="return-form" class="primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M20 17H9l3 3M20 17l-3-3"/></svg>
+            Return book
+          </button>
         </div>
       </div>
  
@@ -255,10 +374,25 @@
   </main>
 </div>
  
-<div id="toast"></div>
+<div id="toast"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg><span id="toast-text"></span></div>
+ 
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <h3 id="modal-title">Remove this book?</h3>
+    <p id="modal-body"></p>
+    <div class="modal-actions">
+      <button class="ghost" id="modal-cancel">Cancel</button>
+      <button class="primary danger" id="modal-confirm">Remove</button>
+    </div>
+  </div>
+</div>
  
 <script>
-/* ============ State (mirrors the C structs, kept in memory for the session) ============ */
+/* ============ Config (mirrors the C constants) ============ */
+const MAX_BOOKS = 100;
+const MAX_STUDENTS = 50;
+ 
+/* ============ State ============ */
 let books = [
   { id: 101, title: "Clean Code", subject: "Software Engineering", available: true },
   { id: 102, title: "Introduction to Algorithms", subject: "Data Structures", available: false },
@@ -269,8 +403,44 @@ let books = [
 let students = [
   { id: 1, name: "Riya Sharma", borrowedBookId: 102, lastBorrowedSubject: "Data Structures" }
 ];
+let activity = [];
+let bookFilter = 'all';
+let bookSearch = '';
+let studentSearch = '';
+let sortKey = 'id';
+let sortDir = 1;
  
-/* ============ Utility: Levenshtein distance (ported from the C version) ============ */
+/* ============ Lookup helpers (mirrors findBookIndex/findStudentIndex) ============ */
+function findBookIndex(id) { return books.findIndex(b => b.id === id); }
+function findStudentIndex(id) { return students.findIndex(s => s.id === id); }
+ 
+/* ============ Activity log ============ */
+function logActivity(text) {
+  activity.unshift({ text, time: new Date() });
+  if (activity.length > 8) activity.pop();
+  renderActivity();
+}
+function renderActivity() {
+  const el = document.getElementById('activity-list');
+  el.innerHTML = activity.length ? activity.map(a => `
+    <li><span class="dot"></span><span>${escapeHtml(a.text)}</span><span class="when">${a.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span></li>
+  `).join('') : `<li style="color:var(--paper-dim);font-style:italic;">Nothing recorded yet this session.</li>`;
+}
+ 
+/* ============ Shelf illustration ============ */
+const spineColors = ['#c29a3b', '#a6514f', '#7d9b76', '#6f7f9b', '#b9895a'];
+function drawShelf() {
+  const el = document.getElementById('shelf-illustration');
+  const n = Math.max(books.length, 6);
+  let html = '';
+  for (let i = 0; i < n; i++) {
+    const h = 46 + ((i * 37) % 50);
+    html += `<div class="spine" style="height:${h}px;background:${spineColors[i % spineColors.length]};"></div>`;
+  }
+  el.innerHTML = html;
+}
+ 
+/* ============ Levenshtein distance (ported from the C version) ============ */
 function levenshtein(s1, s2) {
   const len1 = s1.length, len2 = s2.length;
   const matrix = Array.from({ length: len1 + 1 }, () => new Array(len2 + 1).fill(0));
@@ -289,15 +459,10 @@ function recommendBooks(subject, excludeId = null) {
   const sub = subject.toLowerCase();
   const matches = [];
   for (const b of books) {
-    if (!b.available) continue;
-    if (excludeId !== null && b.id === excludeId) continue;
+    if (!b.available || b.id === excludeId) continue;
     const temp = b.subject.toLowerCase();
-    if (temp.includes(sub) || sub.includes(temp)) {
-      matches.push({ book: b, similar: false });
-    } else {
-      const dist = levenshtein(sub, temp);
-      if (dist <= Math.floor(sub.length / 2)) matches.push({ book: b, similar: true });
-    }
+    if (temp.includes(sub) || sub.includes(temp)) matches.push({ book: b, similar: false });
+    else if (levenshtein(sub, temp) <= Math.floor(sub.length / 2)) matches.push({ book: b, similar: true });
   }
   return matches;
 }
@@ -306,12 +471,30 @@ function recommendBooks(subject, excludeId = null) {
 let toastTimer;
 function toast(message, isError = false) {
   const el = document.getElementById('toast');
-  el.textContent = message;
+  document.getElementById('toast-text').textContent = message;
   el.classList.toggle('error', isError);
   el.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => el.classList.remove('show'), 2600);
 }
+ 
+/* ============ Modal (custom confirm, replaces window.confirm) ============ */
+let modalConfirmHandler = null;
+function openConfirmModal(title, body, onConfirm) {
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').textContent = body;
+  modalConfirmHandler = onConfirm;
+  document.getElementById('modal-overlay').classList.add('show');
+  document.getElementById('modal-confirm').focus();
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('show');
+  modalConfirmHandler = null;
+}
+document.getElementById('modal-cancel').addEventListener('click', closeModal);
+document.getElementById('modal-overlay').addEventListener('click', e => { if (e.target.id === 'modal-overlay') closeModal(); });
+document.getElementById('modal-confirm').addEventListener('click', () => { if (modalConfirmHandler) modalConfirmHandler(); closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
  
 /* ============ Navigation ============ */
 document.querySelectorAll('nav button').forEach(btn => {
@@ -323,9 +506,30 @@ document.querySelectorAll('nav button').forEach(btn => {
   });
 });
  
+/* ============ Filters, search, sorting ============ */
+document.querySelectorAll('#book-filter-chips .chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('#book-filter-chips .chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    bookFilter = chip.dataset.filter;
+    render();
+  });
+});
+document.getElementById('book-search').addEventListener('input', e => { bookSearch = e.target.value.toLowerCase(); render(); });
+document.getElementById('student-search').addEventListener('input', e => { studentSearch = e.target.value.toLowerCase(); render(); });
+ 
+document.querySelectorAll('th.sortable').forEach(th => {
+  th.addEventListener('click', () => {
+    const key = th.dataset.sort;
+    if (sortKey === key) sortDir *= -1; else { sortKey = key; sortDir = 1; }
+    render();
+  });
+});
+ 
 /* ============ Rendering ============ */
 function render() {
-  // Dashboard stats
+  drawShelf();
+ 
   document.getElementById('stat-total').textContent = books.length;
   document.getElementById('stat-available').textContent = books.filter(b => b.available).length;
   document.getElementById('stat-issued').textContent = books.filter(b => !b.available).length;
@@ -333,32 +537,68 @@ function render() {
   document.getElementById('nav-book-count').textContent = books.length;
   document.getElementById('nav-student-count').textContent = students.length;
  
-  // Recently added (last 5, most recent first)
+  const bookCapEl = document.getElementById('book-capacity');
+  bookCapEl.textContent = `${books.length} / ${MAX_BOOKS} shelved`;
+  bookCapEl.classList.toggle('warn', books.length >= MAX_BOOKS);
+ 
+  const studentCapEl = document.getElementById('student-capacity');
+  studentCapEl.textContent = `${students.length} / ${MAX_STUDENTS} registered`;
+  studentCapEl.classList.toggle('warn', students.length >= MAX_STUDENTS);
+ 
   const recent = books.slice(-5).reverse();
   document.getElementById('recent-books-body').innerHTML = recent.length ? recent.map(b => `
     <tr><td>${escapeHtml(b.title)}</td><td>${escapeHtml(b.subject)}</td>
     <td><span class="badge ${b.available ? 'available' : 'issued'}">${b.available ? 'Available' : 'Issued'}</span></td></tr>
   `).join('') : `<tr class="empty-row"><td colspan="3">No books yet — add one from the Books tab.</td></tr>`;
  
-  // Books table
-  document.getElementById('books-body').innerHTML = books.length ? books.map(b => `
-    <tr>
+  // Sort indicator
+  document.querySelectorAll('th.sortable').forEach(th => {
+    const active = th.dataset.sort === sortKey;
+    th.classList.toggle('sorted', active);
+    th.querySelector('.arrow').textContent = sortDir === 1 ? '▲' : '▼';
+  });
+ 
+  let visibleBooks = books.filter(b => {
+    if (bookFilter === 'available' && !b.available) return false;
+    if (bookFilter === 'issued' && b.available) return false;
+    if (bookSearch && !(b.title.toLowerCase().includes(bookSearch) || b.subject.toLowerCase().includes(bookSearch))) return false;
+    return true;
+  });
+  visibleBooks.sort((a, b) => {
+    let va = a[sortKey], vb = b[sortKey];
+    if (sortKey === 'available') { va = a.available ? 1 : 0; vb = b.available ? 1 : 0; }
+    if (typeof va === 'string') { va = va.toLowerCase(); vb = vb.toLowerCase(); }
+    if (va < vb) return -1 * sortDir;
+    if (va > vb) return 1 * sortDir;
+    return 0;
+  });
+ 
+  document.getElementById('books-body').innerHTML = visibleBooks.length ? visibleBooks.map(b => `
+    <tr data-book-row="${b.id}">
       <td>${b.id}</td><td>${escapeHtml(b.title)}</td><td>${escapeHtml(b.subject)}</td>
       <td><span class="badge ${b.available ? 'available' : 'issued'}">${b.available ? 'Available' : 'Issued'}</span></td>
-      <td><button class="danger-link" onclick="removeBook(${b.id})">Remove</button></td>
+      <td><button class="danger-link" onclick="confirmRemoveBook(${b.id})">Remove</button></td>
     </tr>
-  `).join('') : `<tr class="empty-row"><td colspan="5">The shelf is empty. Add the first book above.</td></tr>`;
+  `).join('') : `<tr class="empty-row"><td colspan="5">${books.length ? 'Nothing matches that search.' : 'The shelf is empty. Add the first book above.'}</td></tr>`;
  
-  // Students table
-  document.getElementById('students-body').innerHTML = students.length ? students.map(s => `
-    <tr>
+  let visibleStudents = students.filter(s => !studentSearch || s.name.toLowerCase().includes(studentSearch));
+  document.getElementById('students-body').innerHTML = visibleStudents.length ? visibleStudents.map(s => `
+    <tr data-student-row="${s.id}">
       <td>${s.id}</td><td>${escapeHtml(s.name)}</td>
       <td>${s.borrowedBookId && s.borrowedBookId !== -1 ? '#' + s.borrowedBookId : '—'}</td>
       <td>${escapeHtml(s.lastBorrowedSubject || '—')}</td>
     </tr>
-  `).join('') : `<tr class="empty-row"><td colspan="4">No students recorded yet.</td></tr>`;
+  `).join('') : `<tr class="empty-row"><td colspan="4">${students.length ? 'Nothing matches that search.' : 'No students recorded yet.'}</td></tr>`;
+ 
+  renderActivity();
 }
  
+function flashRow(selector) {
+  requestAnimationFrame(() => {
+    const row = document.querySelector(selector);
+    if (row) { row.classList.remove('flash'); void row.offsetWidth; row.classList.add('flash'); }
+  });
+}
 function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 }
@@ -366,27 +606,53 @@ function escapeHtml(str) {
 /* ============ Add Book ============ */
 document.getElementById('add-book-form').addEventListener('submit', e => {
   e.preventDefault();
-  const id = parseInt(document.getElementById('book-id').value, 10);
-  const title = document.getElementById('book-title').value.trim();
-  const subject = document.getElementById('book-subject').value.trim();
+  if (books.length >= MAX_BOOKS) { toast(`Book limit reached (${MAX_BOOKS}). Remove a book before adding another.`, true); return; }
  
-  if (books.some(b => b.id === id)) {
-    toast('A book with that ID already exists.', true);
-    return;
-  }
+  const idInput = document.getElementById('book-id');
+  const titleInput = document.getElementById('book-title');
+  const subjectInput = document.getElementById('book-subject');
+  [idInput, titleInput, subjectInput].forEach(i => i.classList.remove('field-error'));
+ 
+  const id = parseInt(idInput.value, 10);
+  const title = titleInput.value.trim();
+  const subject = subjectInput.value.trim();
+ 
+  if (!Number.isInteger(id)) { idInput.classList.add('field-error'); toast('Enter a valid Book ID.', true); return; }
+  if (findBookIndex(id) !== -1) { idInput.classList.add('field-error'); toast('A book with that ID already exists.', true); return; }
+  if (!title) { titleInput.classList.add('field-error'); toast('Title cannot be empty.', true); return; }
+  if (!subject) { subjectInput.classList.add('field-error'); toast('Subject cannot be empty.', true); return; }
+ 
   books.push({ id, title, subject, available: true });
   e.target.reset();
   render();
+  flashRow(`[data-book-row="${id}"]`);
+  logActivity(`Added "${title}" (#${id})`);
   toast(`"${title}" added to the shelf.`);
 });
  
 /* ============ Remove Book ============ */
-function removeBook(id) {
-  const idx = books.findIndex(b => b.id === id);
-  if (idx === -1) return;
-  const [removed] = books.splice(idx, 1);
-  render();
-  toast(`"${removed.title}" removed from the shelf.`);
+function confirmRemoveBook(id) {
+  const book = books.find(b => b.id === id);
+  if (!book) return;
+  openConfirmModal('Remove this book?', `"${book.title}" will be permanently removed from the shelf.`, () => {
+    books = books.filter(b => b.id !== id);
+    render();
+    logActivity(`Removed "${book.title}" (#${id})`);
+    toast(`"${book.title}" removed from the shelf.`);
+  });
+}
+ 
+/* ============ Quick find by ID ============ */
+document.getElementById('quick-find-btn').addEventListener('click', runQuickFind);
+document.getElementById('quick-find-input').addEventListener('keydown', e => { if (e.key === 'Enter') runQuickFind(); });
+function runQuickFind() {
+  const id = parseInt(document.getElementById('quick-find-input').value, 10);
+  const resultEl = document.getElementById('quick-find-result');
+  if (!Number.isInteger(id)) { resultEl.innerHTML = `<p style="color:var(--paper-dim);">Enter a numeric Book ID.</p>`; return; }
+  const book = books.find(b => b.id === id);
+  resultEl.innerHTML = book
+    ? `<div class="found"><span>${escapeHtml(book.title)} <span style="color:var(--paper-dim);">— ${escapeHtml(book.subject)}</span></span><span class="badge ${book.available ? 'available' : 'issued'}">${book.available ? 'Available' : 'Issued'}</span></div>`
+    : `<p style="color:var(--paper-dim);">No book with ID ${id}.</p>`;
 }
  
 /* ============ Issue Book ============ */
@@ -405,18 +671,24 @@ document.getElementById('issue-form').addEventListener('submit', e => {
     return;
   }
  
+  const studentIdx = findStudentIndex(sid);
+  if (studentIdx === -1 && students.length >= MAX_STUDENTS) {
+    toast(`Student limit reached (${MAX_STUDENTS}). Cannot register a new borrower.`, true);
+    return; // book stays available -- nothing to roll back
+  }
+ 
   book.available = false;
-  let student = students.find(s => s.id === sid);
-  if (student) {
-    student.borrowedBookId = bid;
-    student.lastBorrowedSubject = book.subject;
-    student.name = name || student.name;
+  if (studentIdx !== -1) {
+    students[studentIdx].borrowedBookId = bid;
+    students[studentIdx].lastBorrowedSubject = book.subject;
+    if (name) students[studentIdx].name = name;
   } else {
     students.push({ id: sid, name: name || `Student ${sid}`, borrowedBookId: bid, lastBorrowedSubject: book.subject });
   }
  
   e.target.reset();
   render();
+  logActivity(`Issued "${book.title}" to ${name || 'student ' + sid}`);
   toast(`"${book.title}" issued to ${name || 'student ' + sid}.`);
   showRecommendations(book.subject, bid, `More in "${book.subject}"`);
 });
@@ -436,6 +708,7 @@ document.getElementById('return-form').addEventListener('submit', e => {
  
   e.target.reset();
   render();
+  logActivity(`Returned ${book ? '"' + book.title + '"' : 'book #' + bid} from ${student.name}`);
   toast(book ? `"${book.title}" returned. Thank you.` : 'Book returned.');
 });
  
@@ -443,15 +716,47 @@ document.getElementById('return-form').addEventListener('submit', e => {
 function showRecommendations(subject, excludeId, hintText) {
   const matches = recommendBooks(subject, excludeId);
   const panel = document.getElementById('recommend-panel');
-  const hint = document.getElementById('recommend-hint');
-  const list = document.getElementById('recommend-list');
- 
-  hint.textContent = hintText;
-  list.innerHTML = matches.length
-    ? matches.map(m => `<li>${escapeHtml(m.book.title)} <span class="tag">${m.similar ? 'similar subject' : m.book.subject}</span></li>`).join('')
+  document.getElementById('recommend-hint').textContent = hintText;
+  document.getElementById('recommend-list').innerHTML = matches.length
+    ? matches.map(m => `<li><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 4h11a2 2 0 0 1 2 2v14H6a2 2 0 0 1-2-2V4z"/></svg>${escapeHtml(m.book.title)}<span class="tag">${m.similar ? 'similar subject' : m.book.subject}</span></li>`).join('')
     : `<li>No related titles available right now.</li>`;
   panel.style.display = 'block';
 }
+ 
+/* ============ Export / Import ledger ============ */
+document.getElementById('export-btn').addEventListener('click', () => {
+  const data = { exportedAt: new Date().toISOString(), books, students };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'library-ledger.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('Ledger exported.');
+});
+ 
+document.getElementById('import-btn').addEventListener('click', () => document.getElementById('import-file').click());
+document.getElementById('import-file').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const data = JSON.parse(reader.result);
+      if (!Array.isArray(data.books) || !Array.isArray(data.students)) throw new Error('bad shape');
+      books = data.books;
+      students = data.students;
+      render();
+      logActivity('Imported ledger from file');
+      toast('Ledger imported.');
+    } catch {
+      toast('That file is not a valid ledger export.', true);
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+});
  
 /* ============ Init ============ */
 render();
